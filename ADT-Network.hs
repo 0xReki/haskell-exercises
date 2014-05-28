@@ -1,7 +1,8 @@
 -- {{{ type/data definitions
 data IPAddress            = IPAddress Int Int Int Int
+                           deriving Eq
 
-type Bandwith             = Integer
+type Bandwidth             = Integer
 
 type StorageCapacity      = Integer
 
@@ -9,58 +10,49 @@ data PCOperatingSystem    = Linux
                           | Windows
                           | BSD
                           | MacOS
-                           deriving (Enum, Show)
+                           deriving (Enum, Show, Eq)
 
 data PhoneOperatingSystem = Android
                           | Symbian
                           | IOS
                           | WindowsPhone
                           | Maemo
-                           deriving (Enum, Show)
+                           deriving (Enum, Show, Eq)
 
-data SimpleNetwork        = SSwitch       Bandwith [Network]
-                          | SComputer     Bandwith StorageCapacity PCOperatingSystem
+data SimpleNetwork        = SimpleSwitch       Bandwidth [SimpleNetwork]
+                          | SimpleComputer     Bandwidth StorageCapacity PCOperatingSystem
 
-data Network              = Switch       IPAddress Bandwith [Network]
-                          | Computer     IPAddress Bandwith StorageCapacity PCOperatingSystem
-                          | AccessPoint  IPAddress Bandwith [WirelessNetwork]
+data Network              = Switch       IPAddress Bandwidth [Network]
+                          | Computer     IPAddress Bandwidth StorageCapacity PCOperatingSystem
+                          | AccessPoint  IPAddress Bandwidth [WirelessNetwork]
 
-data WirelessNetwork      = Repeater     IPAddress Bandwith [WirelessNetwork]
-                          | Laptop       IPAddress Bandwith StorageCapacity PCOperatingSystem
-                          | MobilePhone  IPAddress Bandwith PhoneOperatingSystem
-                          | Bridge       IPAddress Bandwith [Network]
+data WirelessNetwork      = Repeater     IPAddress Bandwidth [WirelessNetwork]
+                          | Laptop       IPAddress Bandwidth StorageCapacity PCOperatingSystem
+                          | MobilePhone  IPAddress Bandwidth PhoneOperatingSystem
+                          | Bridge       IPAddress Bandwidth [Network]
 -- }}} type/data definitions
 
 -- {{{ excersises
 -- Define following folds and their types
 -- foldSimpleNetwork ::
---
-
+      
 -- foldNetwork ::
---
 
 -- foldWirelessNetwork ::
---
 
--- define following functions with and without using folds
--- hasDuplicateIPAddress :: Network -> Bool
---
---
-
--- maximumCommonBandwith :: Network -> Bandwith
---
-
+-- define following functions using folds
 -- countComputers :: Network -> Int
---
 
 -- countPhones :: Network -> Int
---
 
--- countPCOperatingSystems :: Network -> PCOperatingSystems -> Int
---
+-- maximumCommonBandwidth :: Network -> Bandwidth
+
+-- countPCOperatingSystems :: PCOperatingSystem  -> Network -> Int
+
+-- hasDuplicateIPAddress :: Network -> Bool
 
 -- mostUsedPhoneOperatingSystem :: Network -> PhoneOperatingSystem
---
+
 -- }}} excersises
 
 -- {{{ testcases
