@@ -1,0 +1,4 @@
+haskell-exercises
+=================
+
+haskell exercises
