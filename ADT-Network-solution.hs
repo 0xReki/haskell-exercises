@@ -2,7 +2,7 @@
 data IPAddress            = IPAddress Int Int Int Int
                            deriving Eq
 
-type Bandwidth             = Integer
+type Bandwidth            = Integer
 
 type StorageCapacity      = Integer
 
@@ -106,7 +106,7 @@ maximumCommonBandwidth = foldNetwork sf cf af rf lf mf bf
           bf _ bw bws = minimum (bw:bws)
 
 -- countPCOperatingSystems :: PCOperatingSystem  -> Network -> Int
-countPCOperatingSystems :: PCOperatingSystem -> Network -> Int
+countPCOperatingSystems :: PCOperatingSystem -> Network -> Integer
 countPCOperatingSystems os = foldNetwork sf cf af rf lf mf bf
     where sf _ _ oss   = sum oss
           cf _ _ _ cos | cos == os = 1
@@ -135,6 +135,19 @@ hasDuplicateIPAddress =  hasDuplicates.allIPAddresses
           bf ip _ ips = concat ([ip]:ips)
 
 -- mostUsedPhoneOperatingSystem :: Network -> PhoneOperatingSystem
+mostUsedPhoneOperatingSystem ns = fst $ head $ sortP [ (o, countPhoneOperatingSystems o ns) | o <- [Android .. Maemo] ] 
+    where sortP ((a,b):xs) = sortP [(c,d)|(c,d) <- xs, b<d] ++ [(a,b)] ++ sortP [(c,d)|(c,d) <- xs, b>=d]
+
+countPhoneOperatingSystems :: PhoneOperatingSystem -> Network -> Integer
+countPhoneOperatingSystems os = foldNetwork sf cf af rf lf mf bf
+    where sf _ _ oss = sum oss
+          cf _ _ _ _ = 0
+          af _ _ oss = sum oss
+          rf _ _ oss = sum oss
+          lf _ _ _ _ = 0
+          mf _ _ pos | pos == os = 1
+                     | otherwise = 0
+          bf _ _ oss = sum oss  
 
 -- }}} excersises
 

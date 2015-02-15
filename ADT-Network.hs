@@ -2,7 +2,7 @@
 data IPAddress            = IPAddress Int Int Int Int
                            deriving Eq
 
-type Bandwidth             = Integer
+type Bandwidth            = Integer
 
 type StorageCapacity      = Integer
 
