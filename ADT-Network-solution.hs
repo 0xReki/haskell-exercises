@@ -71,7 +71,7 @@ foldWirelessNetwork rf lf mf bf sf cf af = f
           f (MobilePhone ip bw os) = mf ip bw os
           f (Bridge ip bw ns)      = bf ip bw (map (foldNetwork sf cf af rf lf mf bf) ns)
 
--- define following functions using folds
+-- define following functions using folds where possible
 -- countComputers :: Network -> Int
 countComputers :: Network -> Int
 countComputers = foldNetwork sf cf af rf lf mf bf
@@ -135,8 +135,9 @@ hasDuplicateIPAddress =  hasDuplicates.allIPAddresses
           bf ip _ ips = concat ([ip]:ips)
 
 -- mostUsedPhoneOperatingSystem :: Network -> PhoneOperatingSystem
-mostUsedPhoneOperatingSystem ns = fst $ head $ sortP [ (o, countPhoneOperatingSystems o ns) | o <- [Android .. Maemo] ] 
-    where sortP ((a,b):xs) = sortP [(c,d)|(c,d) <- xs, b<d] ++ [(a,b)] ++ sortP [(c,d)|(c,d) <- xs, b>=d]
+mostUsedPhoneOperatingSystem ns = fst $ head $ sortPairBySecond [ (o, countPhoneOperatingSystems o ns) | o <- [Android .. Maemo] ] 
+       -- sortPairBySecond :: [(PhoneOperatingSystem, Integer)] -> [(PhoneOperatingSystem, Integer)]
+    where sortPairBySecond (x:xs) = sortPairBySecond [y|y <- xs, snd y < snd x] ++ [x] ++ sortPairByLast [y|y <- xs, snd y >= snd x]
 
 countPhoneOperatingSystems :: PhoneOperatingSystem -> Network -> Integer
 countPhoneOperatingSystems os = foldNetwork sf cf af rf lf mf bf
