@@ -1,6 +1,3 @@
-haskell-exercises
-=================
+Some Haskell exercises I created.
 
-haskell exercises
-
-
+https://github.com/0xReki/haskell-exercises/blob/master/LICENSE.md
