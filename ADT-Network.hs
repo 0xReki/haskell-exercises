@@ -40,7 +40,7 @@ data WirelessNetwork      = Repeater     IPAddress Bandwidth [WirelessNetwork]
 
 -- foldWirelessNetwork ::
 
--- define following functions using folds
+-- define following functions using folds where possible
 -- countComputers :: Network -> Int
 
 -- countPhones :: Network -> Int
