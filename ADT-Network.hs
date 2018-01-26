@@ -19,17 +19,17 @@ data PhoneOperatingSystem = Android
                           | Maemo
                            deriving (Enum, Show, Eq)
 
-data SimpleNetwork        = SimpleSwitch       Bandwidth [SimpleNetwork]
-                          | SimpleComputer     Bandwidth StorageCapacity PCOperatingSystem
+data SimpleNetwork        = SimpleSwitch         Bandwidth [SimpleNetwork]
+                          | SimpleComputer       Bandwidth StorageCapacity PCOperatingSystem
 
-data Network              = Switch       IPAddress Bandwidth [Network]
-                          | Computer     IPAddress Bandwidth StorageCapacity PCOperatingSystem
-                          | AccessPoint  IPAddress Bandwidth [WirelessNetwork]
+data Network              = Switch               IPAddress Bandwidth [Network]
+                          | Computer             IPAddress Bandwidth StorageCapacity PCOperatingSystem
+                          | WirelessBaseStation  IPAddress Bandwidth [WirelessNetwork]
 
-data WirelessNetwork      = Repeater     IPAddress Bandwidth [WirelessNetwork]
-                          | Laptop       IPAddress Bandwidth StorageCapacity PCOperatingSystem
-                          | MobilePhone  IPAddress Bandwidth PhoneOperatingSystem
-                          | Bridge       IPAddress Bandwidth [Network]
+data WirelessNetwork      = Repeater             IPAddress Bandwidth [WirelessNetwork]
+                          | Laptop               IPAddress Bandwidth StorageCapacity PCOperatingSystem
+                          | MobilePhone          IPAddress Bandwidth PhoneOperatingSystem
+                          | WirelessAccessPoint  IPAddress Bandwidth [Network]
 -- }}} type/data definitions
 
 -- {{{ excersises
